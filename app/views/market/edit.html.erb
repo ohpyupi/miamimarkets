@@ -1,2 +1,16 @@
-<h1>Market#edit</h1>
-<p>Find me in app/views/market/edit.html.erb</p>
+<p><%= flash[:alert] %></p>
+<h2>Edit</h2>
+
+<form action="/market/edit_complete" method="post">
+  <input type="hidden" name="id" value="<%= @post.id %>">
+  <p style="color: #ff0000">category:
+  <select name="post_category">
+    <option value="Rent/Housing">Rent/Housing</option>
+    <option value="Cars/Trucks">Cars/Trucks</option>
+    <option value="Second hands">Second hands</option>
+    <option value="Free topics">Free topics</option>
+  </select></p>
+  <p>title: <input type="text" name="post_title" value="<%= @post.title %>"></p>
+  <p>content: <textarea name="post_content"><%= @post.content %></textarea></p>
+  <input type="submit" value="edit">
+</form>

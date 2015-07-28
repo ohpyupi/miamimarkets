@@ -3,9 +3,9 @@ Miamimarket::Application.routes.draw do
   get "/:category" => "market#posts_category"
   get "market/show/:id" => "market#show"
   get "market/write"
-  get "market/write_complete"
-  get "market/edit"
-  get "market/edit_complete"
+  post "market/write_complete"
+  get "market/edit/:id" => 'market#edit'
+  post "market/edit_complete"
   get "market/delete_complete"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

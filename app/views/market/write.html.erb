@@ -1,2 +1,19 @@
-<h1>Market#write</h1>
-<p>Find me in app/views/market/write.html.erb</p>
+<p><%= flash[:alert] %></p>
+
+<h2> Write a post </h2>
+
+<form action="/market/write_complete" method="post">
+	<p style="color: #ff0000"> Category:
+	<select name="post_category">
+		<option value="Rent/Housing">Rent/Housing</option>
+		<option value="Cars/Trucks">Cars/Trucks</option>
+		<option value="Second hands">Second hands</option>
+		<option value="Free topics">Free topics</option>
+	</select></p>
+	<p>Title: <input type="text" name="post_title" placeholder="Please, write a title."></p>
+	<p>Content: <textarea name="post_content" placeholder="Please, write content."></textarea></p>
+	<input type="submit" value="Add">
+</form>
+
+
+
