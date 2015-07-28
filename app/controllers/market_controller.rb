@@ -37,6 +37,16 @@ class MarketController < ApplicationController
 			redirect_to :back
 		end
   end
+	
+	def write_comment_complete
+		comment = Comment.new
+		comment.post_id = params[:post_id]
+		comment.content = params[:comment_content]
+		comment.save
+
+		flash[:alert] = "New comment has been added."
+		redirect_to "/market/show/#{comment.post_id}"
+	end
 
   def edit
 		@post = Post.find(params[:id])
@@ -62,4 +72,12 @@ class MarketController < ApplicationController
 		flash[:alert] = "Deleted"
 		redirect_to "/"
   end
+
+	def delete_comment_complete
+		comment = Comment.find(params[:id])
+		comment.destroy
+		flash[:alert] = "The comment has been deleted."
+		redirect_to "/market/show/#{comment.post_id}"
+	end
+
 end

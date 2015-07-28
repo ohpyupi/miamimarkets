@@ -7,6 +7,8 @@ Miamimarket::Application.routes.draw do
   get "market/edit/:id" => 'market#edit'
   post "market/edit_complete"
   get "market/delete_complete/:id" => "market#delete_complete"
+	post "market/write_comment_complete"
+	get "market/delete_comment_complete/:id" => "market#delete_comment_complete"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
