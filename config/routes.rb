@@ -1,4 +1,9 @@
 Miamimarket::Application.routes.draw do
+  get "users/signup"
+  post "users/signup_complete"
+  get "users/login"
+  get "users/login_complete"
+  get "users/logout_complete"
   root "market#posts"
   get "/:category" => "market#posts_category"
   get "market/show/:id" => "market#show"
