@@ -1,0 +1,15 @@
+<h4><a href="#">The Miami Market</a> || <a href="#"> Rent/Housing</a> || <a href="#">Cars/Trucks</a> || <a href="#">Second hands</a> || <a href="#">Free topics</a></h4>
+
+<div>
+	<h2>Welcome to the miami market.</h2>
+	<p>You can buy/sell the second hand products with proper prices :D</p>
+</div>
+
+<% @posts.reverse.each do |post|%>
+<div style="border: 1px solid #ffffff">
+	<h4><%= post.title %></h4>
+	<p style="color: #ff0000"><%= post.category %></p>
+	<p> username </p>
+	<p><%= post.content %></p>
+</div>
+<% end %>
