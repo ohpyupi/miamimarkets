@@ -1,2 +1,8 @@
-<h1>Users#login</h1>
-<p>Find me in app/views/users/login.html.erb</p>
+<p><%= flash[:alert] %></p>
+<h2>Log in</h2>
+
+<form action="/users/login_complete" method="post">
+	<p>username: <input type="text" name="username"></p>
+	<p>password: <input type="password" name="password"></p>
+	<input type="submit" value="log in">
+</form>
