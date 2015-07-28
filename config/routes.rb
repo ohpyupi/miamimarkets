@@ -1,6 +1,6 @@
 Miamimarket::Application.routes.draw do
   root "market#posts"
-  get "market/posts_category"
+  get "/:category" => "market#posts_category"
   get "market/show"
   get "market/write"
   get "market/write_complete"

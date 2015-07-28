@@ -4,6 +4,17 @@ class MarketController < ApplicationController
   end
 
   def posts_category
+		case params[:category]
+		when "rent"
+			@category = "Rent/Housing"
+		when "car"
+			@category = "Cars/Trucks"
+		when "second"
+			@category = "Second hands"
+		else
+			@category = "Free topics"
+		end
+		@posts = Post.where(category: @category)
   end
 
   def show
