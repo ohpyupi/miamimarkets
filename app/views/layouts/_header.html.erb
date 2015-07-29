@@ -1,13 +1,31 @@
-<h4><a href="/">The Miami Market</a> || <a href="/rent"> Rent/Housing</a> || <a href="/car">Cars/Trucks</a> || <a href="/second">Second hands</a> || <a href="/free">Free topics</a> || <a href="/market/write">Write</a> ||
-
-<% if session[:user_id].nil?  %>
-<a href="/users/signup">Sign up</a> | <a href="/users/login">Log in</a>
-<% else %>
-<a href="/users/logout_complete">Log out</a>
-<% end %>
-</h4>
+<div class="container" id="market-title">
+	<h1>The Miami Market</h1>
+	<p>Miami University Student Online Market</p>
+</div>
 
 
+<div class="container">
+		<ul class="nav nav-tabs">
+			<li role="presentation"><a href="/">Home</a></li>
 
-
-
+			<li role="presentation" class="dropdown">
+			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Markets <span class="caret"></span></a>
+			<ul class="dropdown-menu">
+				<li><a href="/rent">Rent/Housing</a></li>
+				<li><a href="/car">Cars/Trucks</a></li>
+				<li><a href="/second">Second hands</a></li>
+			</ul>
+		
+			<li role="presentation"><a href="/free">Free topics</a></li>
+			<li role="presentation"><a href="/market/write">Write</a></li>
+		<ul class="nav navbar-nav navbar-right">
+			<% if session[:user_id].nil? %>
+				<button type="button" class="btn btn-default navbar-btn"><a href="/users/signup">Sign up</a></button>
+				<button type="button" class="btn btn-default navbar-btn"><a href="/users/login">Sign in</a></button>
+			<% else %>
+				<button type="button" class="btn btn-default navbar-btn"><a href="/users/logout_complete">Log out</a></button>
+			<% end %>
+			</ul>
+		</ul>
+	
+</div>

@@ -1,10 +1,15 @@
-<%= flash[:alert] %>
+<div class="container">
+	<% if !flash[:alert].nil? %>
+	<div class="alert alert-danger">	
+	<%= flash[:alert] %>
+	</div>
+	<% end %>
 
-<div>
-	<h2>Welcome to the miami market.</h2>
-	<p>You can buy/sell the second hand products with proper prices :D</p>
+	<div class="well text-center">
+		<h2>Welcome to the miami market.</h2>
+		<p>You can buy/sell the second hand productis with proper prices :D</p>
+	</div>
+
+
+	<%= render :partial => "market/posts" %>
 </div>
-
-<hr>
-
-<%= render :partial => "market/posts" %>

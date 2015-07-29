@@ -11,3 +11,10 @@
  *= require_self
  *= require_tree .
  */
+
+#market-title{
+	height: 120px;
+	padding: 25px 25px 0px 0px;
+	text-align: center;
+	color: #B80000;
+}
