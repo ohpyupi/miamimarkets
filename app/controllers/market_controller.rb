@@ -34,6 +34,7 @@ class MarketController < ApplicationController
 		post.category = params[:post_category]
 		post.title = params[:post_title]
 		post.content = params[:post_content]
+		post.image = params[:image]
 		if post.save
 			flash[:alert] = "Saved"
 			redirect_to "/market/show/#{post.id}"
