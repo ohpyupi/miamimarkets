@@ -6,13 +6,13 @@
 	<h4>Title: <%= @post.title %></h4>
 	<p style="color: #ff0000">Category: <%= @post.category%></p>
 	<p> Content: <%= @post.content %></p>
-	
+	<p><%= @post.created_at %></p>	
 	<p><a href="/market/edit/<%= @post.id %>">edit</a></p>
 	<p><a href="/market/delete_complete/<%= @post.id %>">delete</a></p>
 
 	<hr>
 	<% @post.comments.each do |comment| %>
-	<p><strong><%= comment.user.username %></strong> <%= comment.content  %>
+	<p><strong><%= comment.user.username %></strong> <%= comment.content  %> <%= comment.updated_at %>
 	<a href="/market/delete_comment_complete/<%= comment.id %>">delete</a></p>
 	<% end %>
 

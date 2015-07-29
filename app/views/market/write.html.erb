@@ -1,20 +1,32 @@
-<p><%= flash[:alert] %></p>
+<div class="container">
+	<% if !flash[:alert].nil? %>
+	<div class="alert alert-danger">
+		<%= flash[:alert] %>
+	</div>
+	<% end %>
 
-<h2> Write a post </h2>
+	<div class="row">
+		<div class="col-md-2">
+		</div>
+		<div class="col-md-8 text-center">
+			<h3 class="form-heading"> Write a post </h3>
 
-<form action="/market/write_complete" method="post" enctype="multipart/form-data">
-	<p style="color: #ff0000"> Category:
-	<select name="post_category">
-		<option value="Rent/Housing">Rent/Housing</option>
-		<option value="Cars/Trucks">Cars/Trucks</option>
-		<option value="Second hands">Second hands</option>
-		<option value="Free topics">Free topics</option>
-	</select></p>
-	<p>Title: <input type="text" name="post_title" placeholder="Please, write a title."></p>
-	<p>Content: <textarea name="post_content" placeholder="Please, write content."></textarea></p>
-	<p>Upload a photo: <input type="file" name="image"></p>
-	<input type="submit" value="Add">
-</form>
-
-
-
+			<form action="/market/write_complete" method="post" enctype="multipart/form-data">
+			<p> Category:
+				<select name="post_category">
+					<option value="Rent/Housing">Rent/Housing</option>
+					<option value="Cars/Trucks">Cars/Trucks</option>
+					<option value="Second hands">Second hands</option>
+					<option value="Free topics">Free topics</option>
+				</select></p>
+			<p><input class="form-input" type="text" name="post_title" placeholder="Please, write a title."></p>
+			<p><textarea class="form-textarea" name="post_content" placeholder="Please, write content."></textarea></p>
+			<p>Upload a photo</p>
+			<p><input type="file" name="image"></p>
+			<input class="btn btn-lg btn-block add-button" type="submit" value="Add">
+			</form>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+</div>
