@@ -56,6 +56,10 @@ class MarketController < ApplicationController
 
   def edit
 		@post = Post.find(params[:id])
+		if @post.user_id != session[:user_id]
+			flash[:alert] = "You are not authorized."
+			redirect_to :back
+		end
   end
 
   def edit_complete
@@ -74,16 +78,26 @@ class MarketController < ApplicationController
 
   def delete_complete
 		post = Post.find(params[:id])
-		post.destroy
-		flash[:alert] = "Deleted"
-		redirect_to "/"
+		if post.user_id == session[:user_id]
+			post.destroy
+			flash[:alert] = "Deleted"
+			redirect_to "/"
+		else
+			flash[:alert] = "You are not authorized."
+			redirect_to :back
+		end
   end
 
 	def delete_comment_complete
 		comment = Comment.find(params[:id])
-		comment.destroy
-		flash[:alert] = "The comment has been deleted."
-		redirect_to "/market/show/#{comment.post_id}"
+		if comment.user_id == session[:user_id]
+			comment.destroy
+			flash[:alert] = "The comment has been deleted."
+			redirect_to "/market/show/#{comment.post_id}"
+		else
+			flash[:alert] = "You are not authorized."
+			redirect_to :back
+		end
 	end
 
 end
