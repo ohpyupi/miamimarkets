@@ -1,10 +1,25 @@
-<p><%= flash[:alert] %></p>
-<h2>Sign up</h2>
+<div class="container">
+	<% if !flash[:alert].nil? %>
+	<div class="alert alert-danger">
+		<%= flash[:alert] %>
+	</div>
+	<% end %>
 
-<form action="/users/signup_complete" method="post">
-	<p> username: <input type="text" name="username"></p>
-	<p> e-mail: <input type="text" name="useremail"></p>
-	<p> password: <input type="password" name="password"></p>
-	<p> password check: <input type="password" name="retype_password"></p>
-	<input type="submit" value="sign up">
-</form>
+	<div class="row">
+		<div class="col-md-4">
+		</div>
+		<div class="col-md-4 text-center">
+			<h3 class="form-heading">Sign up</h3>
+
+			<form action="/users/signup_complete" method="post">
+				<p><input class="form-input" type="text" name="username" placeholder="username"></p>
+				<p><input class="form-input" type="text" name="useremail" placeholder="e-mail"></p>
+				<p><input class="form-input" type="password" name="password" placeholder="password"></p>
+				<p><input class="form-input" type="password" name="retype_password" placeholder="password check"></p>
+				<input class="btn btn-lg btn-block" type="submit" value="sign up">
+			</form>
+		</div>
+		<div class="col-md-4">
+		</div>
+	</div>
+</div>

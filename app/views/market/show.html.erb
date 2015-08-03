@@ -1,26 +1,43 @@
-<p><%= flash[:alert] %></p>
-<h2>Items</h2>
+<div class="container">
+	<% if !flash[:alert].nil?  %>
+	<div class="alert alert-danger">
+		<%= flash[:alert] %>
+	</div>
+	<% end %>
 
-<div style="border: 1ps solid #ffffff">
-	<p><img src="<%= @post.image_url(:medium) %>"></p>
-	<h4>Title: <%= @post.title %></h4>
-	<p style="color: #ff0000">Category: <%= @post.category%></p>
-	<p> Content: <%= @post.content %></p>
-	<p><%= @post.created_at %></p>	
-	<p><a href="/market/edit/<%= @post.id %>">edit</a></p>
-	<p><a href="/market/delete_complete/<%= @post.id %>">delete</a></p>
+	<h2 class="text-center form-heading">Item</h2>
+	<div class="row">
+		<div class="col-md-1">
+		</div>
+	<div class="col-md-5 text-right">
+		<img src="<%= @post.image_url(:medium) %>">
+	</div>
 
+	<div class="col-md-5">
+		<h3 class="show-title"><%= @post.title %></h3>
+		<p><span class="label label-warning"><%= @post.category%></span></p>
+		<p class="show-textarea"><%= @post.content %></p>
+		<p><%= @post.created_at %></p>	
+		<p><a href="/market/edit/<%= @post.id %>">edit</a> |
+			<a href="/market/delete_complete/<%= @post.id %>">delete</a> ||
+			<a href="/">Go back to the full list.</a>
+		</p>
 	<hr>
 	<% @post.comments.each do |comment| %>
 	<p><strong><%= comment.user.username %></strong> <%= comment.content  %> <%= comment.updated_at %>
 	<a href="/market/delete_comment_complete/<%= comment.id %>">delete</a></p>
 	<% end %>
 
-	<form action="/market/write_comment_complete" method="post">
+	<form class="text-left" action="/market/write_comment_complete" method="post">
 		<input type="hidden" name="post_id" value="<%= @post.id %>">
 		<% if !@comment_writer.nil? %>
 		<p><strong><%= @comment_writer.username %></strong> <input type="text" name="comment_content" placeholder="Write a comment."><input type="submit" value="comment"></p>
 		<% end %>
 	</form>
-	<p><a href="/">Go back to the full list.</a></p>
+	</div>
+	<div class="col-md-1">
+	</div>
 </div>
+</div>
+
+
