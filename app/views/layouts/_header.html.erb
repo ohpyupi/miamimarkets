@@ -1,31 +1,77 @@
-<div class="container" id="market-title">
-	<h1>The Miami Market</h1>
-	<p>Miami University Student Online Market</p>
+<link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '146984498970959',
+      xfbml      : true,
+      version    : 'v2.4'
+    });
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div id="market-title">
+	<h1>The Miami Markets</h1>
+	<p>The Online Markets for Miami's Students</p>
 </div>
 
+<br>
+<br>
 
-<div class="container">
+<div>
+	<div class="col-xs-12">
 		<ul class="nav nav-tabs">
-			<li role="presentation"><a href="/">Home</a></li>
 
-			<li role="presentation" class="dropdown">
-			<a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> Markets <span class="caret"></span></a>
-			<ul class="dropdown-menu">
-				<li><a href="/rent">Rent/Housing</a></li>
-				<li><a href="/car">Cars/Trucks</a></li>
-				<li><a href="/second">Second hands</a></li>
-			</ul>
+			<li role="presentation"><a href="/">Home</a></li>
+			<li role="presentation"><a href="/market/about">About</a></li>
+			<li role="presentation"><a href="/notice">Notice</a></li>
+
+			<li role="presentation"><a href="/rent">Rent/Housing</a></li>
+			<li role="presentation"><a href="/car">Cars/Trucks</a></li>
+			<li role="presentation"><a href="/bicycles">Bicycles</a></li>
 		
+			<li role="presentation"><a href="/second">Second hands</a></li>
 			<li role="presentation"><a href="/free">Free topics</a></li>
-			<li role="presentation"><a href="/market/write">Write</a></li>
-		<ul class="nav navbar-nav navbar-right">
-			<% if session[:user_id].nil? %>
-				<button type="button" class="btn btn-default navbar-btn"><a href="/users/signup">Sign up</a></button>
-				<button type="button" class="btn btn-default navbar-btn"><a href="/users/login">Sign in</a></button>
-			<% else %>
-				<button type="button" class="btn btn-default navbar-btn"><a href="/users/logout_complete">Log out</a></button>
-			<% end %>
+
+			<ul class="nav navbar-nav navbar-right">
+
+				<button type="button" class="btn btn-default navbar-btn"><a href="/market/myposts">See all my posts</a></button>
+				<button type="button" class="btn btn-default navbar-btn"><a href="/market/write">Write a post</a></button>
+		
+				<% if session[:user_id].nil? %>
+					<button type="button" class="btn btn-default navbar-btn"><a href="/auth/facebook">Sign in with <font color="#003D99">Facebook</font></a></button>
+				<% else %>
+				<% @cuser = User.find(session[:user_id])%>
+					<button type="button" class="btn btn-default navbar-btn"><strong><%= @cuser.username  %></strong></button>
+				<% if @cuser.id == 1 %>
+					<button type="button" class="btn btn-default navbar-btn"><a href="/users/superlogin">go super</a></button>
+				<% elsif @cuser.id == 2 %>
+					<button type="button" class="btn btn-default navbar-btn"><a href="/users/allusers">See all users</a></button>
+				<% end %>
+					<button type="button" class="btn btn-default navbar-btn"><a href="/users/logout_complete">Log out</a></button>
+				<% end %>
 			</ul>
 		</ul>
-	
+	</div>
+
 </div>
+
+<div class="container">
+</div>
+
+<% if !flash[:alert].nil? %>
+<div class="alert alert-danger">	
+<%= flash[:alert] %>
+</div>
+<% end %>
+
+

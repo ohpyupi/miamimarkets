@@ -1,0 +1,27 @@
+<% @users.each do |user| %>
+<div class="panel">
+	<div class="row panel-body">
+
+		<div class="col-md-2">
+			<h2 id="post-number">#<%= user.id %></h2>
+		</div>
+
+		<div class="col-md-7">
+			<h3><strong><%= user.username %></strong> &nbsp <%= user.created_at.to_date %></h3>
+		</div>
+
+		<div class="col-md-3">
+			<button type="button" class="btn btn-lg"><a href="/users/userprofile/<%= user.id %>">Show profile</a></button>
+		</div>
+
+	</div>
+</div>
+<% end %>
+
+<div class="text-center">
+<%= paginate @users %>
+</div>
+
+<div class="text-center">
+<%= page_entries_info @users %>
+</div>

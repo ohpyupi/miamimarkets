@@ -1,29 +1,44 @@
 class MarketController < ApplicationController
 	before_action :login_check
-	skip_before_action :login_check, :only => [:posts, :posts_category, :show]
+	skip_before_action :login_check, :only => [:about, :posts, :posts_category, :show]
 
   def posts
-		@posts = Post.all
+		@posts = Post.order('created_at DESC').page(params[:page]).per(10)
   end
+
+	def about
+	end
+
+	def search
+		@posts = Post.search(params[:search]).order('created_at DESC').page(params[:page]).per(10)
+	end
 
   def posts_category
 		case params[:category]
+		when "notice"
+			@category = "Notice"
 		when "rent"
 			@category = "Rent/Housing"
 		when "car"
 			@category = "Cars/Trucks"
+		when "bicycles"
+			@category = "Bicycles"
 		when "second"
 			@category = "Second hands"
 		else
 			@category = "Free topics"
 		end
-		@posts = Post.where(category: @category)
+		@posts = Post.where(category: @category).order('created_at DESC').page(params[:page]).per(10)
   end
 
   def show
 		@post = Post.find(params[:id])
 		@comment_writer = User.where(id: session[:user_id])[0]
   end
+	
+	def myposts
+		@posts = Post.where(user_id: session[:user_id]).order('created_at DESC').page(params[:page]).per(10)
+	end
 
   def write
   end
@@ -80,7 +95,7 @@ class MarketController < ApplicationController
 
   def delete_complete
 		post = Post.find(params[:id])
-		if post.user_id == session[:user_id]
+		if post.user_id == session[:user_id] || session[:user_id] == 2
 			post.destroy
 			flash[:alert] = "Deleted"
 			redirect_to "/"
@@ -92,7 +107,7 @@ class MarketController < ApplicationController
 
 	def delete_comment_complete
 		comment = Comment.find(params[:id])
-		if comment.user_id == session[:user_id]
+		if comment.user_id == session[:user_id] || session[:user_id] == 2
 			comment.destroy
 			flash[:alert] = "The comment has been deleted."
 			redirect_to "/market/show/#{comment.post_id}"

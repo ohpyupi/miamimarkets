@@ -1,26 +1,39 @@
-<div class="container">
-	<% if !flash[:alert].nil? %>
-	<div class="alert alert-danger">
-		<%= flash[:alert] %>
-	</div>
-	<% end %>
+<% @cuser = User.find(session[:user_id]) %>
+<div class="jumbotron text-center" id="post-head">
+	<h2>Write a post</h2>
+</div>
 
+<div class="container">
 	<div class="row">
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8 text-center">
-			<h3 class="form-heading"> Write a post </h3>
-
 			<form action="/market/write_complete" method="post" enctype="multipart/form-data">
 			<p> Category:
+				<% if @cuser.id == 2%>
 				<select name="post_category">
+					<option value="Notice">Notice</option>
+				<% else %>
+				<select name="post_category">
+
 					<option value="Rent/Housing">Rent/Housing</option>
 					<option value="Cars/Trucks">Cars/Trucks</option>
+					<option value="Bicycles">Bicycles</option>
 					<option value="Second hands">Second hands</option>
 					<option value="Free topics">Free topics</option>
-				</select></p>
-			<p><input class="form-input" type="text" name="post_title" placeholder="Please, write a title."></p>
-			<p><textarea class="form-textarea" name="post_content" placeholder="Please, write content."></textarea></p>
+				</select>
+				<% end %>
+				</p>
+			<p><input class="form-input" type="text" name="post_title" placeholder="[sample] 2008 hyundai elantra with low miliege."></p>
+			<p><textarea class="form-textarea" name="post_content" placeholder="[sample]
+I leave Oxford soon, and I'd like to sell my neat car with only 8000 dollars.
+VIN: 01234567890123456789a
+transmission: automatic
+odometer: 11300 miles
+title: clean
+type: sedan
+my email is goodman@miamioh.edu. Send me message, then I will tell you my number.
+Thank you :D"></textarea></p>
 			<p>Upload a photo</p>
 			<p><input type="file" name="image"></p>
 			<input class="btn btn-lg btn-block add-button" type="submit" value="Add">

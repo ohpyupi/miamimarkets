@@ -1,25 +1,31 @@
-<div class="container">
-	<% if !flash[:alert].nil? %>
-	<div class="alert alert-danger">
-		<%= flash[:alert] %>
-	</div>
-	<% end %>
+<% @cuser = User.find(session[:user_id]) %>
 
+<div class="jumbotron text-center" id="post-head">
+	<h2>Edit your post.</h2>
+	<p></p>
+</div>
+
+<div class="container">
 <div class="row"> 
 	<div class="col-md-2">
 	</div>
 	<div class="col-md-8">
-		<h3 class="form-heading">Edit</h3>
-
 		<form action="/market/edit_complete" method="post" enctype="multipart/form-data">
   	<input type="hidden" name="id" value="<%= @post.id %>">
-  	<p>category:
-  		<select name="post_category">
-    		<option value="Rent/Housing">Rent/Housing</option>
-    		<option value="Cars/Trucks">Cars/Trucks</option>
-    		<option value="Second hands">Second hands</option>
-    		<option value="Free topics">Free topics</option>
-  		</select></p>
+			<p> Category:
+				<% if @cuser.id == 2%>
+				<select name="post_category">
+					<option value="Notice">Notice</option>
+				<% else %>
+				<select name="post_category">
+					<option value="Rent/Housing">Rent/Housing</option>
+					<option value="Cars/Trucks">Cars/Trucks</option>
+					<option value="Bicycles">Bicycles</option>
+					<option value="Second hands">Second hands</option>
+					<option value="Free topics">Free topics</option>
+				</select>
+				<% end %>
+				</p>
   		<p><input class="form-input" type="text" name="post_title" value="<%= @post.title %>"></p>
   		<p><textarea class="form-textarea" name="post_content"><%= @post.content %></textarea></p>
 			<p>Upload a photo</p>

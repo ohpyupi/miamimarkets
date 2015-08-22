@@ -32,9 +32,11 @@ ActiveRecord::Schema.define(version: 20150729075028) do
   end
 
   create_table "users", force: true do |t|
+    t.string   "provider"
+    t.string   "uid"
     t.string   "username"
-    t.string   "useremail"
-    t.string   "password"
+    t.string   "token"
+    t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

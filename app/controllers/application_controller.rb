@@ -9,6 +9,6 @@ def login_check
 	if !session[:user_id].nil?
 		@current_user = User.find(session[:user_id])
 	else
-		redirect_to "/users/login"
+		redirect_to "/auth/facebook"
 	end
 end

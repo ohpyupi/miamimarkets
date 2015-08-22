@@ -1,11 +1,15 @@
 Miamimarket::Application.routes.draw do
-  get "users/signup"
-  post "users/signup_complete"
-  get "users/login"
-  post "users/login_complete"
+
+  get "users/superlogin"
+  get "users/superlogin_complete" => "users#superlogin_complete"
+	get "users/allusers"
   get "users/logout_complete"
-  root "market#posts"
+	get "users/userprofile/:id" => "users#userprofile"
+	get "users/userban/:id" => "users#userban"
+
+	root "market#posts" 
   get "/:category" => "market#posts_category"
+	get "market/about" => "market#about"
   get "market/show/:id" => "market#show"
   get "market/write"
   post "market/write_complete"
@@ -14,6 +18,13 @@ Miamimarket::Application.routes.draw do
   get "market/delete_complete/:id" => "market#delete_complete"
 	post "market/write_comment_complete"
 	get "market/delete_comment_complete/:id" => "market#delete_comment_complete"
+
+	get 'auth/:provider/callback' => 'users#fb_login'
+	get "users/logout_complete" => "users#logout_complet"
+
+	get "market/myposts" => "market#myposts"
+	get "market/search" => "market#search"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,9 +1,13 @@
-<div class="container">
-	<div class="panel panel-default">
-		<div class="panel-heading">
-  		<h3>The list of <%= @category %></h3>
-		</div>
+<div class="jumbotron text-center" id="post-head">
+			<% if @category == "Notice"%>
+			<h2> Notice board </h2>
+			<p>Some important notice will be updated.</p>
+			<% else %>
+  		<h2>The list of <%= @category %></h2>
+			<p>Please upload any post about <%= @category %>. Somebody must be in interest! :D</p>
+			<% end %>
 </div>
 
+<div class="container" id="post-category">
 <%= render :partial => "market/posts" %>
 </div>

@@ -1,16 +1,41 @@
-<% @posts.reverse.each do |post| %>
+<div>
+	<div class="col-xs-8">
+	</div>
+	<div class="col-xs-4">
+		<%= form_tag("/market/search", method: "get") do %>
+			<div class="navbar-form navbar-left" role="search">
+	<!-- <%= label_tag(:q, "Search") %> -->
+      <%= text_field_tag :search, params[:search], placeholder: "Search posts by titles.", class: "form-control" %>
+      <%= submit_tag "Search", class: "btn btn-default" %>
+			</div>
+    <% end %>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<% @posts.each do |post| %>
 <div class="panel">
 	<div class="row panel-body">
-		<div class="col-md-3">
+		<div class="col-md-2">
+		<h2 id="post-number">#<%= post.id %></h2>
 		</div>
 		<div class="col-md-3">
 			<p><img src="<%= post.image_url(:thumb) %>"></p>
 		</div>
-		<div class="col-md-6">
-  <h4><a href="/market/show/<%= post.id %>"><%= post.title %></a> [<%= post.comments.count %>]</h4>
-  <p><span class="label label-warning"><%= post.category %></span></p>
-  <p><strong><%= post.user.username %></strong></p>
+		<div class="col-md-7">
+ <h4><span class="label label-warning"><%= post.category %></span> &nbsp <a href="/market/show/<%= post.id %>"><%= post.title %></a> [<%= post.comments.count %>]</h4>
+ <p><strong><%= post.user.username %></strong> &nbsp <%= post.created_at.to_date %> </p>
 		</div>
 	</div>
 </div>
 <% end %>
+
+<div class="text-center">
+<%= paginate @posts %>
+</div>
+
+<div class="text-center">
+<%= page_entries_info @posts %>
+</div>

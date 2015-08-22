@@ -14,3 +14,34 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+function textareaPlaceholderNewlines() {
+ 
+        $('textarea[placeholder*="\n"]').each(function(){
+ 
+                // Store placeholder elsewhere and blank it
+                $(this).attr('data-placeholder', $(this).attr('placeholder'));
+                $(this).attr('placeholder', '');
+ 
+                // On focus, if value = placeholder, blank it
+                $(this).focus(function(e){      
+                        if( $(this).val() == $(this).attr('data-placeholder') ) {
+                                $(this).attr('value', '');
+                                $(this).removeClass('placeholder');
+                        }               
+                });                     
+ 
+                // On blur, if value = blank, insert placeholder
+                $(this).blur(function(e){
+                        if( $(this).val() == '' ) {
+                                $(this).attr('value', $(this).attr('data-placeholder'));
+                                $(this).addClass('placeholder');
+                        }
+                });             
+ 
+                // Call blur method to preset element - this will insert the placeholder
+                // if the value hasn't been prepopulated
+                $(this).blur();
+        });
+ 
+}

@@ -1,37 +1,39 @@
-<div class="container">
-	<% if !flash[:alert].nil?  %>
-	<div class="alert alert-danger">
-		<%= flash[:alert] %>
-	</div>
-	<% end %>
+<div class="jumbotron text-center" id="post-head">
+	<h2 class="text-center form-heading">a post</h2>
+</div>
 
-	<h2 class="text-center form-heading">Item</h2>
+<br>
+
+<div class="container">
 	<div class="row">
-		<div class="col-md-1">
-		</div>
-	<div class="col-md-5 text-right">
+	<div class="col-md-5 text-right" id="post-show">
 		<img src="<%= @post.image_url(:medium) %>">
 	</div>
 
-	<div class="col-md-5">
-		<h3 class="show-title"><%= @post.title %></h3>
-		<p><span class="label label-warning"><%= @post.category%></span></p>
-		<p class="show-textarea"><%= @post.content %></p>
-		<p><%= @post.created_at %></p>	
-		<p><a href="/market/edit/<%= @post.id %>">edit</a> |
-			<a href="/market/delete_complete/<%= @post.id %>">delete</a> ||
-			<a href="/">Go back to the full list.</a>
-		</p>
+	<div class="col-md-7">
+		<h3 class="show-title"><span class="label label-warning"><%= @post.category%></span> &nbsp <%= @post.title %></h3>
+		<br>
+		<p class="show-textarea"><%= simple_format @post.content %></p>
+		<br>
+		<p class="show-textarea"><strong><%= @post.user.username %></strong> &nbsp <%= @post.created_at.to_date %></p>
+		<br>	
+		<div class="btn-group" role="group" aria-label="...">
+  		<button type="button" class="btn btn-default"><a href="/market/edit/<%= @post.id %>">edit</a></button>
+  		<button type="button" class="btn btn-default"><a href="/market/delete_complete/<%= @post.id %>">delete</a></button>
+  		<button type="button" class="btn btn-default"><a href="/">Go back to home</a></button>
+	</div>
+	
 	<hr>
 	<% @post.comments.each do |comment| %>
-	<p><strong><%= comment.user.username %></strong> <%= comment.content  %> <%= comment.updated_at %>
-	<a href="/market/delete_comment_complete/<%= comment.id %>">delete</a></p>
+	<p><strong><%= comment.user.username %></strong> <%= comment.content  %>&nbsp;<%= comment.updated_at.to_date %>
+	<button type="button" class="btn btn-default"><a href="/market/delete_comment_complete/<%= comment.id %>">delete</a></button>
+	</p>
 	<% end %>
 
 	<form class="text-left" action="/market/write_comment_complete" method="post">
 		<input type="hidden" name="post_id" value="<%= @post.id %>">
 		<% if !@comment_writer.nil? %>
-		<p><strong><%= @comment_writer.username %></strong> <input type="text" name="comment_content" placeholder="Write a comment."><input type="submit" value="comment"></p>
+		<p><strong><%= @comment_writer.username %></strong> &nbsp <input type="text" name="comment_content" placeholder="Write a comment."> &nbsp <input type="submit" value="comment" class="btn btn-default"></p>
 		<% end %>
 	</form>
 	</div>
