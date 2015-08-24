@@ -6,7 +6,8 @@ class UsersController < ApplicationController
 	end
 
 	def allusers
-		if session[:user_id] != 2
+		@current_user = User.where(id: session[:user_id])[0]
+		if @current_user.usertype != 2
 			flash[:alert] = "Unauthorized attempts."
 			redirect_to "/"
 		else
@@ -20,11 +21,28 @@ class UsersController < ApplicationController
 
 	def userban
 		user = User.find(params[:id])
-		user.token = "goodbye"
+		user.usertype = 9
 		user.save
 		flash[:alert] = "#{user.username} has been banned permanently."
-		redirect_to "/"
+		redirect_to "/users/allusers"
 	end
+
+	def userunban
+		user = User.find(params[:id])
+		user.usertype = 0
+		user.save
+		flash[:alert] = "#{user.username} has been neutralized"
+		redirect_to "/users/allusers"
+	end
+
+	def useragent
+		user = User.find(params[:id])
+		user.usertype = 1
+		user.save
+		flash[:alert] = "#{user.username} is declared to be your agent."
+		redirect_to "/users/allusers"
+	end
+
 
   def superlogin_complete
 		if params[:username] != "supergentle"		
@@ -34,7 +52,7 @@ class UsersController < ApplicationController
 			flash[:alert] = "Super username or authorization key are wrong"
 			redirect_to :back
 		else
-			user = User.find(2)
+			user = User.where(usertype: 2)[0]
 			reset_session
 			session[:user_id] = user.id
 			flash[:alert] = "No one orders me around."
@@ -55,13 +73,5 @@ class UsersController < ApplicationController
     redirect_to "/"
 	end
 	
-	def gosuper
-		reset_session
-		user = User.find(2)
-		session[:user_id] = user.id
-		flash[:alert] = "No one orders me around."
-		redirect_to "/"
-	end
-
 
 end

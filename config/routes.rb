@@ -6,6 +6,8 @@ Miamimarket::Application.routes.draw do
   get "users/logout_complete"
 	get "users/userprofile/:id" => "users#userprofile"
 	get "users/userban/:id" => "users#userban"
+	get "users/userunban/:id" => "users#userunban"
+	get "users/useragent/:id" => "users#useragent"
 
 	root "market#posts" 
   get "/:category" => "market#posts_category"

@@ -8,7 +8,7 @@
 		<div class="col-md-2">
 		</div>
 		<div class="col-md-8 text-center">
-			<form action="/market/write_complete" method="post" enctype="multipart/form-data">
+<!--			<form action="/market/write_complete" method="post" enctype="multipart/form-data">
 			<p> Category:
 				<% if @cuser.id == 2%>
 				<select name="post_category">
@@ -38,6 +38,36 @@ Thank you :D"></textarea></p>
 			<p><input type="file" name="image"></p>
 			<input class="btn btn-lg btn-block add-button" type="submit" value="Add">
 			</form>
+-->
+		<%= form_tag("/market/write_complete", method: "post", multipart: true ) do %>
+			<h3>Category:
+
+			<% if @cuser.usertype == 2 %>
+		 <%= select_tag("post_category", options_for_select([['Notice', "Notice"]], :selected => :option )) %>
+			<% else %>
+		 <%= select_tag("post_category", options_for_select([['Rent/Housing', "Rent/Housing"], ['Cars/Trukcs', "Cars/Trucks"], ['Bicycles', "Bicycles"], ["Second hands", "Second hands"], ['Free topics', "Free topics"]], :selected => :option )) %>
+			<% end %>
+		
+			</h3>
+			<br>
+			<%= text_field_tag 'post_title', nil, class: 'form-input', placeholder: "[sample] 2008 hyundai elantra with low miliege."%>
+			<br>
+			<br>
+			<%= text_area_tag "post_content", nil , class: "form-textarea", placeholder: "[sample]
+I leave Oxford soon, and I'd like to sell my neat car with only 8000 dollars.
+VIN: 01234567890123456789a
+transmission: automatic
+odometer: 11300 miles
+title: clean
+type: sedan
+my email is goodman@miamioh.edu. Send me message, then I will tell you my number.
+Thank you :D" %>
+			<br>
+				<p>Upload a photo: <%= file_field_tag :image, multiple: true %></p>
+			<br>
+		 <%= submit_tag "Write a post", class: "btn btn-lg btn-block" %>
+		<% end %>
+
 		</div>
 		<div class="col-md-2">
 		</div>

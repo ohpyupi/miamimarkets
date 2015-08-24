@@ -52,9 +52,9 @@
 				<% else %>
 				<% @cuser = User.find(session[:user_id])%>
 					<button type="button" class="btn btn-default navbar-btn"><strong><%= @cuser.username  %></strong></button>
-				<% if @cuser.id == 1 %>
+				<% if @cuser.usertype == 1 %>
 					<button type="button" class="btn btn-default navbar-btn"><a href="/users/superlogin">go super</a></button>
-				<% elsif @cuser.id == 2 %>
+				<% elsif @cuser.usertype == 2 %>
 					<button type="button" class="btn btn-default navbar-btn"><a href="/users/allusers">See all users</a></button>
 				<% end %>
 					<button type="button" class="btn btn-default navbar-btn"><a href="/users/logout_complete">Log out</a></button>

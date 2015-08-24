@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150729075028) do
     t.string   "uid"
     t.string   "username"
     t.string   "token"
+    t.integer  "usertype",   default: 0
     t.datetime "expires_at"
     t.datetime "created_at"
     t.datetime "updated_at"

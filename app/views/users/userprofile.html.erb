@@ -5,6 +5,18 @@
 
 <div class="container">
 
+	<h2>Username: <%= @user.username %></h2>
+	<h2>Provider: <%= @user.provider %></h2>
+	<h2>Uid: <%= @user.uid %></h2>
+	<h2>When created: <%= @user.created_at.to_date %></h2>
+
+	<br>
+	<br>
+
 	<button type="button" class="btn btn-lg"><a href="/users/userban/<%= @user.id %>">BAN PERMANENTLY</a></button>
 	
+	<button type="button" class="btn btn-lg"><a href="/users/useragent/<%= @user.id %>">MAKE HIM/HER AGENTS</a></button>
+
+	<button type="button" class="btn btn-lg"><a href="/users/userunban/<%= @user.id %>">MAKE HIM/HER NORMAL OR UNBANNED</a></button>
+
 </div>

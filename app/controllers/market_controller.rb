@@ -1,5 +1,5 @@
 class MarketController < ApplicationController
-	before_action :login_check
+	before_action :login_check, :ban_check
 	skip_before_action :login_check, :only => [:about, :posts, :posts_category, :show]
 
   def posts
@@ -94,8 +94,9 @@ class MarketController < ApplicationController
   end
 
   def delete_complete
+		@current_user = User.where(id: session[:user_id])[0]
 		post = Post.find(params[:id])
-		if post.user_id == session[:user_id] || session[:user_id] == 2
+		if post.user_id == session[:user_id] || @current_user.usertype == 2
 			post.destroy
 			flash[:alert] = "Deleted"
 			redirect_to "/"
@@ -106,8 +107,9 @@ class MarketController < ApplicationController
   end
 
 	def delete_comment_complete
+		@current_user = User.where(id: session[:user_id])[0]
 		comment = Comment.find(params[:id])
-		if comment.user_id == session[:user_id] || session[:user_id] == 2
+		if comment.user_id == session[:user_id] || @current_user.usertype == 2
 			comment.destroy
 			flash[:alert] = "The comment has been deleted."
 			redirect_to "/market/show/#{comment.post_id}"
