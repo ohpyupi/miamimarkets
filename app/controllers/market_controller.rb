@@ -1,6 +1,7 @@
 class MarketController < ApplicationController
 	before_action :login_check, :ban_check
-	skip_before_action :login_check, :only => [:about, :posts, :posts_category, :show]
+	skip_before_action :login_check, :only => [:about, :posts, :posts_category]
+	
 
   def posts
 		@posts = Post.order('created_at DESC').page(params[:page]).per(10)
@@ -49,28 +50,42 @@ class MarketController < ApplicationController
 		post.category = params[:post_category]
 		post.title = params[:post_title]
 		post.content = params[:post_content]
-		post.image = params[:image]
-		if post.save
-			flash[:alert] = "Saved"
-			redirect_to "/market/show/#{post.id}"
+
+		if params[:photos]
+			if params[:photos].length <= 10
+				if post.save
+		
+					post.pictures.each do |p|
+						p.destroy
+					end
+
+					post.pictures.build
+					params[:photos].each do |photo|
+						post.pictures.create(photo: photo)
+					end
+					flash[:alert] = "Saved"
+					redirect_to "/market/show/#{post.id}"
+				else
+					flash[:alert] = post.errors.values.flatten.join(' ')
+					redirect_to :back
+				end
+			else
+				flash[:alert] = "You have reached the photo limit (10)"
+				redirect_to :back
+			end
 		else
-			flash[:alert] = post.errors.values.flatten.join(' ')
-			redirect_to :back
+			if post.save
+				flash[:alert] = "Successfully saved"
+				redirect_to "/market/show/#{post.id}"
+			else
+				flash[:alert] = post.errors.values.flatten.join(' ')
+				redirect_to :back
+			end
 		end
-  end
-	
-	def write_comment_complete
-		comment = Comment.new
-		comment.user_id = session[:user_id]
-		comment.post_id = params[:post_id]
-		comment.content = params[:comment_content]
-		comment.save
 
-		flash[:alert] = "New comment has been added."
-		redirect_to "/market/show/#{comment.post_id}"
 	end
-
-  def edit
+	
+	def edit
 		@post = Post.find(params[:id])
 		if @post.user_id != session[:user_id]
 			flash[:alert] = "You are not authorized."
@@ -83,14 +98,53 @@ class MarketController < ApplicationController
 		post.category = params[:post_category]
 		post.title = params[:post_title]
 		post.content = params[:post_content]
-		post.image = params[:image]
-		if post.save
-			flash[:alert] = "Edited"
-			redirect_to "/market/show/#{post.id}"
+	
+		if params[:photos]
+			if params[:photos].length <= 10
+				if post.save
+
+					post.pictures.each do |p|
+						p.destroy
+					end
+					post.pictures.build
+					params[:photos].reverse_each do |photo|
+						post.pictures.create(photo: photo)
+					end
+
+					flash[:alert] = "Successfully edited"
+					redirect_to "/market/show/#{post.id}"
+				else
+					flash[:alert] = post.errors.values.flatten.join(' ')
+					redirect_to :back
+				end
+			else
+				flash[:alert] = "You have reached the photo limit (10)"
+				redirect_to :back
+			end
 		else
-			flash[:alert] = post.errors.values.flatten.join(' ')
-			redirect_to :back
+			if post.save
+				flash[:alert] = "Saved"
+				redirect_to "/market/show/#{post.id}"
+			else
+				flash[:alert] = post.errors.values.flatten.join(' ')
+				redirect_to :back
+			end
 		end
+
+
+#		if params[:photos].length <= 10	
+#			if post.save
+#				flash[:alert] = "Edited"
+#				redirect_to "/market/show/#{post.id}"
+#			else
+#				flash[:alert] = post.errors.values.flatten.join(' ')
+#				redirect_to :back
+#			end
+#
+#		else
+#			flash[:alert] = "You have reached the photo limit(10"
+#			redirect_to :back
+#		end
   end
 
   def delete_complete
@@ -105,6 +159,23 @@ class MarketController < ApplicationController
 			redirect_to :back
 		end
   end
+
+	def write_comment_complete
+
+			comment = Comment.new
+			comment.user_id = session[:user_id]
+			comment.post_id = params[:post_id]
+			comment.content = params[:comment_content]
+			comment.save
+		if comment.save
+			flash[:alert] = "New comment has been added"
+			redirect_to "/market/show/#{comment.post.id}"
+		else
+			flash[:alert] = comment.errors.values.flatten.join(' ')
+			redirect_to :back
+		end
+	end
+
 
 	def delete_comment_complete
 		@current_user = User.where(id: session[:user_id])[0]

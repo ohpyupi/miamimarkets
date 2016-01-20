@@ -1,4 +1,8 @@
 Miamimarket::Application.routes.draw do
+	resources	:albums
+	resources	:photos
+
+	root "market#posts" 
 
   get "users/superlogin"
   get "users/superlogin_complete" => "users#superlogin_complete"
@@ -8,8 +12,9 @@ Miamimarket::Application.routes.draw do
 	get "users/userban/:id" => "users#userban"
 	get "users/userunban/:id" => "users#userunban"
 	get "users/useragent/:id" => "users#useragent"
+	get 'auth/:provider/callback' => 'users#fb_login'
+	get "users/logout_complete" => "users#logout_complet"
 
-	root "market#posts" 
   get "/:category" => "market#posts_category"
 	get "market/about" => "market#about"
   get "market/show/:id" => "market#show"
@@ -20,9 +25,6 @@ Miamimarket::Application.routes.draw do
   get "market/delete_complete/:id" => "market#delete_complete"
 	post "market/write_comment_complete"
 	get "market/delete_comment_complete/:id" => "market#delete_comment_complete"
-
-	get 'auth/:provider/callback' => 'users#fb_login'
-	get "users/logout_complete" => "users#logout_complet"
 
 	get "market/myposts" => "market#myposts"
 	get "market/search" => "market#search"

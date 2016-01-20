@@ -2,39 +2,60 @@
 
 <div class="jumbotron text-center" id="post-head">
 	<h2>Edit your post.</h2>
-	<p></p>
 </div>
 
 <div class="container">
-<div class="row"> 
+	<div class="row"> 
+	
 	<div class="col-md-2">
 	</div>
-	<div class="col-md-8">
-		<form action="/market/edit_complete" method="post" enctype="multipart/form-data">
-  	<input type="hidden" name="id" value="<%= @post.id %>">
-			<p> Category:
-				<% if @cuser.id == 2%>
-				<select name="post_category">
-					<option value="Notice">Notice</option>
-				<% else %>
-				<select name="post_category">
-					<option value="Rent/Housing">Rent/Housing</option>
-					<option value="Cars/Trucks">Cars/Trucks</option>
-					<option value="Bicycles">Bicycles</option>
-					<option value="Second hands">Second hands</option>
-					<option value="Free topics">Free topics</option>
-				</select>
-				<% end %>
-				</p>
-  		<p><input class="form-input" type="text" name="post_title" value="<%= @post.title %>"></p>
-  		<p><textarea class="form-textarea" name="post_content"><%= @post.content %></textarea></p>
-			<p>Upload a photo</p>
-			<p><input type="file" name="image"></p>
-  		<input class="btn btn-lg btn-block" type="submit" value="edit">
-		</form>
-	</div>
-	<div class="col-md-2">
-	</div>
-</div>
+	
+	<div class="col-md-8 text-center">
+		<%= form_tag("/market/edit_complete", method: "post", multipart: true ) do %>
+			<%= hidden_field_tag "id", @post.id %>
+			<h3>Category:
 
+			<% if @cuser.usertype == 2 %>
+				<%= select_tag("post_category", options_for_select([["Notice", "Notice"],['Rent/Housing', "Rent/Housing"], ['Cars/Trukcs', "Cars/Trucks"], ['Bicycles', "Bicycles"], ["Second hands", "Second hands"], ['Free topics', "Free topics"]], :selected => @post.category )) %>
+
+			<% else %>
+		 		<%= select_tag("post_category", options_for_select([['Rent/Housing', "Rent/Housing"], ['Cars/Trukcs', "Cars/Trucks"], ['Bicycles', "Bicycles"], ["Second hands", "Second hands"], ['Free topics', "Free topics"]], :selected => @post.category )) %>
+			<% end %>
+			</h3>
+		
+		<br>
+	
+			<%= text_field_tag 'post_title', @post.title , class: "form-input" %>
+		
+		<br>
+		<br>
+		
+			<%= text_area_tag "post_content", @post.content, class: "form-textarea"%>
+		<br>
+		<br>
+
+<!--		<div class="fileUpload btn btn-primary">
+					<span>Upload a photo</span>
+					<%= file_field_tag "image", class: "upload", :multiple => true %>
+				</div>
+-->	
+			<div class="fileUpload btn btn-primary">
+				<span>Upload photos (up to 10)</span>
+				<%= file_field_tag "photos[]", class: "upload", type: :file, multiple: true %>
+			</div>
+		
+		<br>
+
+		<div>
+			<br>
+			<%= submit_tag "Edit the post", class: "btn btn-lg btn-block "%>
+		<% end %>
+		</div>
+	
+	</div>
+	
+	<div class="col-md-2">
+	</div>
+
+	</div>
 </div>

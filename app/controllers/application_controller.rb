@@ -13,6 +13,34 @@ def login_check
 	end
 end
 
+def agent_check
+	@agent_user = nil
+	if !session[:user_id].nil?
+		@agent_user = User.where(id: session[:user_id])[0]
+		if @agent_user.usertype != 1
+			flash[:alert] = "Unauthorized attempts."
+			redirect_to "/"
+		end
+	else
+		flash[:alert] = "Unauthorized attempts."
+		redirect_to "/"
+	end
+end
+		 
+def super_check
+	@agent_user = nil
+	if !session[:user_id].nil?
+		@agent_user = User.where(id: session[:user_id])[0]
+		if @agent_user.usertype != 2
+			flash[:alert] = "Unauthorized attempts."
+			redirect_to "/"
+		end
+	else
+		flash[:alert] = "Unauthorized attempts."
+		redirect_to "/"
+	end
+end
+
 def ban_check
 	@ban_check = nil
 	if !session[:user_id].nil?

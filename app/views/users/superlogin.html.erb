@@ -9,7 +9,8 @@
 		<div class="navbar-form navbar-left">
 			<%= form_tag("/users/superlogin_complete", method: "get") do %>
 			<%= text_field_tag :username, params[:username], placeholder: "Superusername is required.", class: "form-input"%>
-      <%= password_field_tag :auth, params[:auth], placeholder: "Authorization key must be needed.", class: "form-input" %>
+      <%= password_field_tag "auth", "", placeholder: "Authorization key must be needed.", class: "form-input" %>
+<!--      <%= password_field_tag :auth, session[:auth], placeholder: "Authorization key must be needed.", class: "form-input" %> -->
       <%= submit_tag "Go super", class: "btn btn-lg btn-block" %>
     	<% end %>
 		</div>

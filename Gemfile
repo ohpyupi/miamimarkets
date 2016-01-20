@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'carrierwave'
+gem 'paperclip'
 gem 'mini_magick'
 
 gem 'mysql2'

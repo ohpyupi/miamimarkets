@@ -21,12 +21,15 @@
 		<div class="col-md-2">
 		<h2 id="post-number">#<%= post.id %></h2>
 		</div>
-		<div class="col-md-3">
+
+<!--		<div class="col-md-3">
 			<p><img src="<%= post.image_url(:thumb) %>"></p>
+
 		</div>
-		<div class="col-md-7">
+-->
+		<div class="col-md-10">
  <h4><span class="label label-warning"><%= post.category %></span> &nbsp <a href="/market/show/<%= post.id %>"><%= post.title %></a> [<%= post.comments.count %>]</h4>
- <p><strong><%= post.user.username %></strong> &nbsp <%= post.created_at.to_date %> </p>
+ <p><strong><%= post.user.username %></strong> &nbsp <%= post.created_at.to_date %></p> 
 		</div>
 	</div>
 </div>

@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+
+	before_action	:agent_check, :only => [:superlogin, :superlogin_complete]
+	before_action :super_check, :only => :allusers
+
   def signup
   end
 	
@@ -6,13 +10,7 @@ class UsersController < ApplicationController
 	end
 
 	def allusers
-		@current_user = User.where(id: session[:user_id])[0]
-		if @current_user.usertype != 2
-			flash[:alert] = "Unauthorized attempts."
-			redirect_to "/"
-		else
 			@users = User.order('created_at DESC').page(params[:page]).per(30)
-		end
 	end
 
 	def userprofile
@@ -48,12 +46,12 @@ class UsersController < ApplicationController
 		if params[:username] != "supergentle"		
 			flash[:alert] = "Super username or authorization key are wrong"
 			redirect_to :back
-		elsif params[:auth] != "0203idll"
+		elsif params[:auth] != "goldjade"
 			flash[:alert] = "Super username or authorization key are wrong"
 			redirect_to :back
 		else
-			user = User.where(usertype: 2)[0]
 			reset_session
+			user = User.where(usertype: 2)[0]
 			session[:user_id] = user.id
 			flash[:alert] = "No one orders me around."
 			redirect_to "/"

@@ -1,58 +1,34 @@
 <% @cuser = User.find(session[:user_id]) %>
+
 <div class="jumbotron text-center" id="post-head">
 	<h2>Write a post</h2>
 </div>
 
 <div class="container">
 	<div class="row">
+	
 		<div class="col-md-2">
 		</div>
+	
 		<div class="col-md-8 text-center">
-<!--			<form action="/market/write_complete" method="post" enctype="multipart/form-data">
-			<p> Category:
-				<% if @cuser.id == 2%>
-				<select name="post_category">
-					<option value="Notice">Notice</option>
+			<%= form_tag("/market/write_complete", method: "post", multipart: true ) do %>
+				<h3>Category:
+
+				<% if @cuser.usertype == 2 %>
+					<%= select_tag("post_category", options_for_select([["Notice", "Notice"], ['Rent/Housing', "Rent/Housing"], ['Cars/Trukcs', "Cars/Trucks"], ['Bicycles', "Bicycles"], ["Second hands", "Second hands"], ['Free topics', "Free topics"]], :selected => :option )) %>
+
 				<% else %>
-				<select name="post_category">
-
-					<option value="Rent/Housing">Rent/Housing</option>
-					<option value="Cars/Trucks">Cars/Trucks</option>
-					<option value="Bicycles">Bicycles</option>
-					<option value="Second hands">Second hands</option>
-					<option value="Free topics">Free topics</option>
-				</select>
+		 			<%= select_tag("post_category", options_for_select([['Rent/Housing', "Rent/Housing"], ['Cars/Trukcs', "Cars/Trucks"], ['Bicycles', "Bicycles"], ["Second hands", "Second hands"], ['Free topics', "Free topics"]], :selected => :option )) %>
 				<% end %>
-				</p>
-			<p><input class="form-input" type="text" name="post_title" placeholder="[sample] 2008 hyundai elantra with low miliege."></p>
-			<p><textarea class="form-textarea" name="post_content" placeholder="[sample]
-I leave Oxford soon, and I'd like to sell my neat car with only 8000 dollars.
-VIN: 01234567890123456789a
-transmission: automatic
-odometer: 11300 miles
-title: clean
-type: sedan
-my email is goodman@miamioh.edu. Send me message, then I will tell you my number.
-Thank you :D"></textarea></p>
-			<p>Upload a photo</p>
-			<p><input type="file" name="image"></p>
-			<input class="btn btn-lg btn-block add-button" type="submit" value="Add">
-			</form>
--->
-		<%= form_tag("/market/write_complete", method: "post", multipart: true ) do %>
-			<h3>Category:
+				</h3>
 
-			<% if @cuser.usertype == 2 %>
-		 <%= select_tag("post_category", options_for_select([['Notice', "Notice"]], :selected => :option )) %>
-			<% else %>
-		 <%= select_tag("post_category", options_for_select([['Rent/Housing', "Rent/Housing"], ['Cars/Trukcs', "Cars/Trucks"], ['Bicycles', "Bicycles"], ["Second hands", "Second hands"], ['Free topics', "Free topics"]], :selected => :option )) %>
-			<% end %>
-		
-			</h3>
 			<br>
-			<%= text_field_tag 'post_title', nil, class: 'form-input', placeholder: "[sample] 2008 hyundai elantra with low miliege."%>
+			
+				<%= text_field_tag 'post_title', nil, class: 'form-input', placeholder: "[sample] 2008 hyundai elantra with low miliege."%>
+			
 			<br>
 			<br>
+			
 			<%= text_area_tag "post_content", nil , class: "form-textarea", placeholder: "[sample]
 I leave Oxford soon, and I'd like to sell my neat car with only 8000 dollars.
 VIN: 01234567890123456789a
@@ -62,14 +38,33 @@ title: clean
 type: sedan
 my email is goodman@miamioh.edu. Send me message, then I will tell you my number.
 Thank you :D" %>
+			
 			<br>
-				<p>Upload a photo: <%= file_field_tag :image, multiple: true %></p>
 			<br>
-		 <%= submit_tag "Write a post", class: "btn btn-lg btn-block" %>
-		<% end %>
+<!--				<div class="fileUpload btn btn-primary">
+					<span>Upload a image</span>
+					<%= file_field_tag "image", class: "upload"%>
+				</div>
+-->
 
+				<div class="fileUpload btn btn-primary">
+						<span>Upload photos (up to 10)</span>
+						<%= file_field_tag "photos[]", class: "upload", type: :file, multiple: true %>
+				</div>
+
+			<br>
+
+			<div>
+				<br>
+				<%= submit_tag "Write a post", class: "btn btn-lg btn-block" %>
+			
+			<% end %>
+			</div>
+	
 		</div>
+
 		<div class="col-md-2">
 		</div>
+
 	</div>
 </div>

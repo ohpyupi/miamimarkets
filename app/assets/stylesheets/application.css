@@ -97,6 +97,13 @@
 	padding: 10px 0px 0px 10px;
 }
 
+.form-comment{
+	width: 80%;
+	height: 40px;
+	border: 1.5px solid #cccccc;
+	border-radius: 6px;
+	padding: 0px 0px 0px 10px;
+}
 .show-title{
 	width: 100%;
 
@@ -107,10 +114,13 @@
 
 }
 
-#post-category img{
+.photo-frame {
 	border-radius: 15px;
+	border-style: solid;
+	border-width: 3px;
 	width: auto;
 	height: auto;
+	border-color: #B80000;
 }
 
 #post-show img{
